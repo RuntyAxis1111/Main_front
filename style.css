@@ -1,0 +1,319 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  /* Initial monochrome palette */
+  --bg-color: #FFFFFF;
+  --text-color: #000000;
+
+  /* Stone Colors */
+  --finance-color: #0066FF;
+  --legal-color: #FF0000;
+  --labels-color: #00C853;
+  --datahub-color: #F4D300;
+  --rh-color: #FF6D00;
+  --ai-color: #9B5DE5;
+
+  /* Gradient Colors (Light Theme) - Kept for reference, not used for background */
+  --finance-gradient-start-light: #3385FF;
+  --finance-gradient-end-light: var(--finance-color);
+  --legal-gradient-start-light: #FF3333;
+  --legal-gradient-end-light: var(--legal-color);
+  --labels-gradient-start-light: #33D47A;
+  --labels-gradient-end-light: var(--labels-color);
+  --datahub-gradient-start-light: #F7E34D;
+  --datahub-gradient-end-light: var(--datahub-color);
+  --rh-gradient-start-light: #FF8A33;
+  --rh-gradient-end-light: var(--rh-color);
+  --ai-gradient-start-light: #B085EE;
+  --ai-gradient-end-light: var(--ai-color);
+
+  /* Gradient Colors (Dark Theme) - Kept for reference, not used for background */
+  --finance-gradient-start-dark: var(--finance-color);
+  --finance-gradient-end-dark: #004C99;
+  --legal-gradient-start-dark: var(--legal-color);
+  --legal-gradient-end-dark: #CC0000;
+  --labels-gradient-start-dark: var(--labels-color);
+  --labels-gradient-end-dark: #00993F;
+  --datahub-gradient-start-dark: var(--datahub-color);
+  --datahub-gradient-end-dark: #C2A600;
+  --rh-gradient-start-dark: var(--rh-color);
+  --rh-gradient-end-dark: #7A4AC2;
+
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column; /* Stack header and main */
+  align-items: center;
+  justify-content: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.1s, color 0.1s; /* Smooth blink transition */
+}
+
+/* Theme specific colors */
+body[data-theme="light"] {
+  --bg-color: #FFFFFF;
+  --text-color: #000000;
+}
+
+body[data-theme="dark"] {
+  --bg-color: #000000;
+  --text-color: #FFFFFF;
+}
+
+
+header {
+  margin-bottom: 40px;
+  width: 100%; /* Ensure header takes full width for centering */
+  text-align: center; /* Center the h1 inside the header */
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: bold;
+  line-height: 1.1;
+  font-family: sans-serif;
+  white-space: nowrap; /* Prevent wrapping during typewriter effect */
+  overflow: hidden; /* Hide overflowing text */
+  border-right: .15em solid var(--text-color); /* Cursor effect */
+  animation: blink-caret .75s step-end infinite;
+  display: inline-block; /* Allow border-right to work correctly with text-align */
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: var(--text-color); }
+}
+
+/* Hexagon Grid Layout */
+.hexagon-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, auto); /* 3 rows for the new layout */
+  grid-template-areas:
+    "finance-area . legal-area"
+    "labels-area datahub-area rh-area"
+    ". ai-area .";
+  gap: 60px 80px; /* Increased gap: row-gap column-gap */
+  justify-items: center;
+  align-items: center;
+  max-width: 1000px; /* Increased max-width to accommodate wider gap */
+  margin: 0 auto;
+}
+
+/* Assign grid areas */
+.hexagon[data-stone="finance"] { grid-area: finance-area; }
+.hexagon[data-stone="legal"] { grid-area: legal-area; }
+.hexagon[data-stone="labels"] { grid-area: labels-area; }
+.hexagon[data-stone="datahub"] { grid-area: datahub-area; }
+.hexagon[data-stone="rh"] { grid-area: rh-area; }
+.hexagon[data-stone="ai"] { grid-area: ai-area; }
+
+
+.hexagon {
+  width: 130px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #FFFFFF;
+  font-weight: bold;
+  font-size: 16px;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden; /* Hide content outside the hexagon shape */
+  transition: transform 300ms ease-in-out, box-shadow 300ms ease-in-out, opacity 300ms ease-in-out;
+  cursor: pointer;
+}
+
+/* Make the center hexagon slightly larger */
+.hexagon.center-stone {
+  width: 180px; /* Increased size */
+  height: 200px; /* Increased size */
+  font-size: 20px; /* Adjust font size for larger hexagon */
+}
+
+
+.hexagon-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  position: relative;
+  z-index: 1; /* Ensure inner content is above fire */
+}
+
+/* Video Background */
+.hexagon-inner video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0; /* Below overlay, text, and fire */
+  /* Clip path applied to parent .hexagon-inner handles the shape */
+}
+
+/* Color Overlay */
+.hexagon-inner .color-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Above video, below text and fire */
+  /* Initial state: fully visible */
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  transition: clip-path 500ms ease-in-out; /* Animation for closing */
+}
+
+/* Apply default stone color to the overlay */
+.hexagon[data-stone="finance"] .color-overlay { background-color: var(--finance-color); }
+.hexagon[data-stone="legal"] .color-overlay { background-color: var(--legal-color); }
+.hexagon[data-stone="labels"] .color-overlay { background-color: var(--labels-color); }
+.hexagon[data-stone="datahub"] .color-overlay { background-color: var(--datahub-color); }
+.hexagon[data-stone="rh"] .color-overlay { background-color: var(--rh-color); }
+.hexagon[data-stone="ai"] .color-overlay { background-color: var(--ai-color); }
+
+
+/* Hover effect: Close the overlay from the sides */
+.hexagon:hover .color-overlay {
+  /* Collapses the overlay to a vertical line in the center */
+  clip-path: polygon(50% 0%, 50% 0%, 50% 100%, 50% 100%);
+}
+
+
+.hexagon span {
+  position: relative;
+  z-index: 2; /* Ensure text is above the inner div, video, and overlay */
+  padding: 0 10px; /* Add some padding to text */
+}
+
+/* Fire Particle Styles */
+.fire-container {
+  position: absolute;
+  top: 0;
+left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Allow clicks to pass through */
+  z-index: 0; /* Ensure particles are behind the inner hexagon */
+}
+
+.fire-particle {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background-color: white; /* Will be set by JS */
+  border-radius: 50%;
+  filter: blur(2px);
+  opacity: 0; /* Start invisible */
+}
+
+
+/* Specific Hover Effects (kept, but might need adjustment with video) */
+.hexagon[data-stone="finance"]:hover {
+  transform: translateY(-10px);
+}
+
+.hexagon[data-stone="legal"]:hover {
+  transform: scale(1.15);
+}
+
+.hexagon[data-stone="labels"]:hover {
+  transform-origin: top left;
+  transform: rotate(-3deg);
+}
+
+.hexagon[data-stone="rh"]:hover {
+  transform: skewX(10deg);
+}
+
+.hexagon[data-stone="ai"]:hover {
+  transform: translateX(15px);
+}
+
+.hexagon[data-stone="datahub"]:hover {
+  animation: pulse-opacity 1s infinite alternate ease-in-out;
+}
+
+@keyframes pulse-opacity {
+  0% { opacity: 0.8; }
+  100% { opacity: 1; }
+}
+
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 32px;
+  }
+
+  .hexagon-grid {
+    grid-template-columns: repeat(2, 1fr); /* Two columns on smaller screens */
+    grid-template-rows: repeat(3, auto); /* Three rows */
+    grid-template-areas:
+      "finance-area legal-area"
+      "labels-area rh-area"
+      "datahub-area ai-area"; /* Adjust grid areas for mobile */
+    gap: 20px; /* Adjusted gap for mobile */
+  }
+
+  .hexagon {
+    width: 120px;
+    height: 140px;
+    font-size: 14px; /* Adjust font size for mobile */
+  }
+
+  /* Center datahub on mobile if needed, though grid area should handle it */
+  .hexagon[data-stone="datahub"] {
+     /* grid-area: datahub-area; already set */
+     justify-self: center;
+     align-self: center;
+     width: 150px; /* Adjust center size for mobile */
+     height: 170px; /* Adjust center size for mobile */
+     font-size: 16px;
+  }
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  body {
+    transition: none !important; /* Disable blink transition */
+  }
+  h1 {
+    animation: none !important; /* Disable cursor blink */
+    border-right: none !important;
+  }
+  .hexagon {
+    transition: none !important; /* Disable hover transitions */
+    animation: none !important; /* Disable pulse animation */
+  }
+  /* Disable JS fire animation */
+  .fire-container {
+    display: none;
+  }
+  /* Disable video autoplay */
+  .hexagon-inner video {
+    display: none;
+  }
+  /* Ensure color overlay is visible when video is disabled */
+  .hexagon-inner .color-overlay {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%) !important;
+  }
+}
