@@ -109,7 +109,8 @@ document.querySelectorAll('.hexagon').forEach(hexagon => {
   });
 });
 
-// Fire Particle Effect (JavaScript)
+// Fire Particle Effect (JavaScript) - Removed
+/*
 function addFireEffect(hexagonElement) {
   const stone = hexagonElement.dataset.stone;
   const fireColor = getComputedStyle(document.documentElement).getPropertyValue(`--${stone}-color`).trim();
@@ -198,15 +199,16 @@ function addFireEffect(hexagonElement) {
     }
   });
 }
+*/
 
 
 // Start the effects
 document.addEventListener('DOMContentLoaded', () => {
   // Set initial theme
-  body.dataset.theme = 'light';
+  body.dataset.theme = 'dark'; // Set initial theme to dark for better contrast with videos
   typeWriter();
   randomBlink();
 
-  // Add fire effect to each hexagon
-  document.querySelectorAll('.hexagon').forEach(addFireEffect);
+  // Add fire effect to each hexagon - Removed
+  // document.querySelectorAll('.hexagon').forEach(addFireEffect);
 });

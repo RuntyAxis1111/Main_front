@@ -4,8 +4,8 @@
   font-weight: 400;
 
   /* Initial monochrome palette */
-  --bg-color: #FFFFFF;
-  --text-color: #000000;
+  --bg-color: #000000; /* Set default background to black for better video visibility */
+  --text-color: #FFFFFF; /* Set default text to white */
 
   /* Stone Colors */
   --finance-color: #0066FF;
@@ -134,7 +134,7 @@ h1 {
   text-decoration: none;
   position: relative;
   overflow: hidden; /* Hide content outside the hexagon shape */
-  transition: transform 300ms ease-in-out, box-shadow 300ms ease-in-out, opacity 300ms ease-in-out;
+  /* Removed all transitions */
   cursor: pointer;
 }
 
@@ -177,9 +177,10 @@ h1 {
   width: 100%;
   height: 100%;
   z-index: 1; /* Above video, below text and fire */
-  /* Initial state: fully visible */
-  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-  transition: clip-path 500ms ease-in-out; /* Animation for closing */
+  /* Initial state: fully transparent */
+  opacity: 0;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); /* Start fully open */
+  transition: opacity 300ms ease-in-out, clip-path 500ms ease-in-out; /* Animation for opacity and closing */
 }
 
 /* Apply default stone color to the overlay */
@@ -191,8 +192,9 @@ h1 {
 .hexagon[data-stone="ai"] .color-overlay { background-color: var(--ai-color); }
 
 
-/* Hover effect: Close the overlay from the sides */
+/* Hover effect: Show overlay and close from the sides */
 .hexagon:hover .color-overlay {
+  opacity: 1; /* Make overlay visible */
   /* Collapses the overlay to a vertical line in the center */
   clip-path: polygon(50% 0%, 50% 0%, 50% 100%, 50% 100%);
 }
@@ -204,58 +206,46 @@ h1 {
   padding: 0 10px; /* Add some padding to text */
 }
 
-/* Fire Particle Styles */
+/* Fire Particle Styles - Removed */
 .fire-container {
-  position: absolute;
-  top: 0;
-left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none; /* Allow clicks to pass through */
-  z-index: 0; /* Ensure particles are behind the inner hexagon */
-}
-
-.fire-particle {
-  position: absolute;
-  width: 5px;
-  height: 5px;
-  background-color: white; /* Will be set by JS */
-  border-radius: 50%;
-  filter: blur(2px);
-  opacity: 0; /* Start invisible */
+  display: none; /* Hide the fire container */
 }
 
 
-/* Specific Hover Effects (kept, but might need adjustment with video) */
+/* Specific Hover Effects (Removed transform animations) */
 .hexagon[data-stone="finance"]:hover {
-  transform: translateY(-10px);
+  /* transform: translateY(-10px); */
 }
 
 .hexagon[data-stone="legal"]:hover {
-  transform: scale(1.15);
+  /* transform: scale(1.15); */
 }
 
 .hexagon[data-stone="labels"]:hover {
-  transform-origin: top left;
-  transform: rotate(-3deg);
+  /* transform-origin: top left; */
+  /* transform: rotate(-3deg); */
 }
 
 .hexagon[data-stone="rh"]:hover {
-  transform: skewX(10deg);
+  /* transform: skewX(10deg); */
 }
 
 .hexagon[data-stone="ai"]:hover {
-  transform: translateX(15px);
+  /* transform: translateX(15px); */
 }
 
 .hexagon[data-stone="datahub"]:hover {
-  animation: pulse-opacity 1s infinite alternate ease-in-out;
+  /* Removed pulse animation */
+  /* animation: pulse-opacity 1s infinite alternate ease-in-out; */
 }
 
+/* Removed pulse-opacity keyframes */
+/*
 @keyframes pulse-opacity {
   0% { opacity: 0.8; }
   100% { opacity: 1; }
 }
+*/
 
 
 /* Responsive Layout */
