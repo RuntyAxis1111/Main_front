@@ -81,7 +81,7 @@ document.querySelectorAll('.hexagon').forEach(hexagon => {
     switch (stone) {
       case 'datahub':
         correctPassword = 'DATA';
-        redirectUrl = 'http://datahub.hybelatinamerica.com/';
+        redirectUrl = 'http://v2datahub.hybelatinamerica.com/';
         action = 'redirect';
         break;
       case 'rh':
