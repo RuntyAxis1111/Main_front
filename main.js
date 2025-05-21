@@ -81,7 +81,7 @@ document.querySelectorAll('.hexagon').forEach(hexagon => {
     switch (stone) {
       case 'datahub':
         correctPassword = 'DATA';
-        redirectUrl = 'http://v2datahub.hybelatinamerica.com/';
+        redirectUrl = 'https://password-prueba-dashboard-pocofr4z7-ti-hybe-latin-america.vercel.app/'; // Updated link
         action = 'redirect';
         break;
       case 'rh':
